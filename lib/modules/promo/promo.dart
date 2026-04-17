@@ -1,0 +1,1 @@
+export './view/promo_list_view.dart';

@@ -1,0 +1,9 @@
+{
+  "width": 1000,
+  "height": 700,
+  "tables": [
+    { "id": "T1", "x": 100, "y": 150, "status": "free", "seats": 4 },
+    { "id": "T2", "x": 300, "y": 200, "status": "booked", "seats": 2 },
+    { "id": "T3", "x": 400, "y": 300, "status": "occupied", "seats": 6 }
+  ]
+}
