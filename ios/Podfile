@@ -1,7 +1,6 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, '13.0'
 
-# Отключаем аналитику CocoaPods
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -10,11 +9,11 @@ project 'Runner', {
   'Release' => :release,
 }
 
-# ==================== НОВАЯ ФУНКЦИЯ flutter_root (самое важное!) ====================
+# ====================== ИСПРАВЛЕННАЯ flutter_root ======================
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('Flutter', 'Generated.xcconfig'), __FILE__)
   unless File.exist?(generated_xcode_build_settings_path)
-    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure \"flutter pub get\" is executed first"
+    raise "#{generated_xcode_build_settings_path} must exist. Run \"flutter pub get\" first."
   end
 
   File.foreach(generated_xcode_build_settings_path) do |line|
@@ -22,15 +21,13 @@ def flutter_root
     return File.expand_path(matches[1]) if matches
   end
 
-  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
+  raise "FLUTTER_ROOT not found in Generated.xcconfig"
 end
-# ================================================================================
+# =====================================================================
 
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
-
-# workspace 'Runner.xcworkspace'   # ← можно закомментировать, flutter_ios_podfile_setup обычно сам всё ставит
 
 target 'Runner' do
   use_frameworks!
@@ -43,7 +40,7 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
 
-    # Твои строки для yandex_maps_mapkit_lite и Swift-фреймворков
+    # ← Твои строки (нужны для yandex_maps_mapkit_lite и Swift-плагинов)
     target.build_configurations.each do |config|
       config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
     end
