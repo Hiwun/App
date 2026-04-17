@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver2_fixed/image_gallery_saver2_fixed.dart';
+import 'package:flutter_image_gallery_saver/flutter_image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tennisapp/components/image/image.dart';
 import 'package:tennisapp/di/locator.dart';
@@ -355,8 +355,8 @@ class _PhotoCarouselState extends State<PhotoCarousel>{
                       isDownloadImage = true;
                       downloadImageIndex = photoIndex;
                     });
-
-                    await ImageGallerySaver.saveImage(image);
+                    final imageSaver = ImageGallerySaver();
+                    await imageSaver.saveImage(image);
 
                     setState(() {
                       isDownloadImage = false;
